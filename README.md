@@ -1,5 +1,6 @@
 # Cognitive-Modeling-Capstone-Project
 ### Badminton Shot Selection as a Two-Choice Decision Problem 
+#### Team Members: Nidhi Padmanabhan & Tanisha Rahim
 ---
  
 ## Overview
