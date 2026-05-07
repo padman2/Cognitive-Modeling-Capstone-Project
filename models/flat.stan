@@ -28,8 +28,8 @@ transformed parameters {
 
 model {
     // Priors
-    v_easy    ~ normal(0, 2);
-    v_hard    ~ normal(0, 2);
+    v_easy     ~ normal(0, 2);
+    v_hard     ~ normal(0, 2);
     beta_logit ~ normal(0, 1);
 
     // Likelihood
@@ -48,6 +48,22 @@ model {
 }
 
 generated quantities {
-    real v_diff = v_easy - v_hard;
+    real v_diff             = v_easy - v_hard;
     real p_v_easy_gt_v_hard = (v_easy > v_hard) ? 1.0 : 0.0;
+
+    // Per-trial log likelihood for LOO-IC computation
+    vector[N] log_lik;
+    for (n in 1:N) {
+        real v_n = (difficulty[n] == 0) ? v_easy : v_hard;
+        if (RT[n] > t_fixed) {
+            if (choice[n] == 1) {
+                log_lik[n] = wiener_lpdf(RT[n] | a_fixed, t_fixed, beta, v_n);
+            } else {
+                log_lik[n] = wiener_lpdf(RT[n] | a_fixed, t_fixed,
+                                         1 - beta, -v_n);
+            }
+        } else {
+            log_lik[n] = 0;
+        }
+    }
 }
