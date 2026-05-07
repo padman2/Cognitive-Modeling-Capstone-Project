@@ -87,42 +87,6 @@ Population
  
 Each player gets their own DDM parameters, but they are regularized toward the group mean. This eliminates individual differences through shrinkage and is the primary model of interest.
  
-### Gender-Level Analysis (Exploratory)
-Gender was tracked as a potential grouping variable for a three-level hierarchy. EDA showed virtually no difference in offensive rate between men (60.4%) and women (60.1%), so gender was not included as a meaningful grouping variable in the primary models.
- 
----
- 
-## Workflow
- 
-Analysis done in EDA/ directory
-
-| Notebook | Purpose | Output |
-|---|---|---|
-| `step00_load_data.ipynb` | Load all CSVs, parse player names | `shuttleset_master.parquet`, `player_map.csv` |
-| `step01_schema_quality.ipynb` | Verify schema, remove bad rallies | `shuttleset_clean.parquet`, `removed_rallies.csv` |
-| `step02_player_selection.ipynb` | Filter to players with ≥ 200 strokes | `shuttleset_filtered.parquet`, `included_players.csv` |
-| `step03_feature_engineering.ipynb` | Compute choice, RT, distance, difficulty | `shuttleset_features.parquet` |
-| `step04_eda_plots.ipynb` | EDA plots and final dataset export | `dataset.csv`, `EDA/figs/` |
- 
-### Final Dataset
- 
-`EDA/data/dataset.csv` — one row per stroke (trial), containing:
- 
-| Column | Description |
-|---|---|
-| `player_id` | Integer ID for the player |
-| `trial_id` | Unique integer ID for each stroke |
-| `choice` | 1 = offensive, 0 = defensive |
-| `RT` | Reaction time in seconds |
-| `difficulty_bin` | 1 = hard (far from center), 0 = easy (close to center) |
-| `distance` | Raw court-center distance in court units |
-| `gender` | `Male` or `Female` |
-
----
-
-### Model Evaluation
- 
----
  
 ---
  
